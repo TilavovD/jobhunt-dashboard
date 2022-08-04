@@ -3,6 +3,8 @@ from django.db.models import Count, Sum, Min, Max, Q, F
 from django.shortcuts import render
 
 # Create your views here.
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -33,13 +35,14 @@ class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
+    @method_decorator(cache_page(60 * 60))
     def get_queryset(self):
         return self.queryset.annotate(
             workers_count=Count('workers'),
             min_price=Min('workers__salary_start'),
             max_price=Max('workers__salary_end'),
             salary_range=models.Case(
-                models.When(Max('workers__salary_end') > 2 * Min('workers__salary_start')),
+                models.When(Max('workers__salary_end') > models.Value(2) * Min('workers__salary_start')),
                 then=(
                     f"{(Min('workers__salary_start') + (Min('workers__salary_start') + Max('workers__salary_end')) / 2) / 2}-"
                     f"{((Min('workers__salary_start') + Max('workers__salary_end')) / 2 + Min('workers__salary_start')) / 2}")),
