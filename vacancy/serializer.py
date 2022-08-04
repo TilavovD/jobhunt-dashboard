@@ -1,7 +1,7 @@
 from django.db import models
 from rest_framework import serializers
 
-from vacancy.models import Company, Worker, Vacancy
+from vacancy.models import Company, Worker, Vacancy, Category
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -20,3 +20,14 @@ class WorkerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Worker
         fields = "__all__"
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    # workers = WorkerSerializer(many=True)
+    workers_count = serializers.IntegerField()
+    # salary_range = serializers.CharField()
+
+    # salary_start = serializers.IntegerField()
+    class Meta:
+        model = Category
+        fields = ("title", "workers_count",)

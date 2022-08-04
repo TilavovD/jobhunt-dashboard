@@ -17,7 +17,7 @@ schema_view = swagger_get_schema_view(
 )
 
 urlpatterns = [
-    path("", include('vacancy.urls')),
+    path("/", include('vacancy.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/swagger/schema/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger-schema"),
     path('__debug__/', include(debug_toolbar.urls)),
