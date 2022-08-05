@@ -25,9 +25,11 @@ class WorkerSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     # workers = WorkerSerializer(many=True)
     workers_count = serializers.IntegerField()
-    # salary_range = serializers.CharField()
+    salary_range = serializers.CharField()
+    max_price = serializers.IntegerField()
+    min_price = serializers.IntegerField()
 
     # salary_start = serializers.IntegerField()
     class Meta:
         model = Category
-        fields = ("title", "workers_count",)
+        fields = ("title", "workers_count", "salary_range", "max_price", "min_price")

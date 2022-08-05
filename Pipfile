@@ -10,6 +10,7 @@ psycopg2-binary = "*"
 drf-yasg = "*"
 django-debug-toolbar = "*"
 unidecode = "*"
+django-redis = "*"
 
 [dev-packages]
 
